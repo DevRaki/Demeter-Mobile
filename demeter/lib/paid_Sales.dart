@@ -1,39 +1,39 @@
-import 'package:demeter/Dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:demeter/models/sale_model.dart';
 import 'package:demeter/services/sale_service.dart';
 import 'package:demeter/login.dart';
-import 'package:demeter/saleDetails.dart';
-import 'package:demeter/paid_Sales.dart';
+import 'package:demeter/sale_info.dart';
+import 'package:demeter/sales.dart';
 import 'package:demeter/services/sale_details_service.dart';
+import 'package:demeter/Dashboard.dart';
 
-class SalesPage extends StatefulWidget {
+class PaidSalesPage extends StatefulWidget {
   @override
-  _SalesPageState createState() => _SalesPageState();
+  _PaidSalesPageState createState() => _PaidSalesPageState();
 }
 
-class _SalesPageState extends State<SalesPage> {
+class _PaidSalesPageState extends State<PaidSalesPage> {
   final SaleService saleService = SaleService();
   final SaleDetailsService saleDetailsService = SaleDetailsService();
   TextEditingController searchController = TextEditingController();
-  late List<SaleModel> sales;
-  late List<SaleModel> filteredSales;
+  late List<SaleModel> paidSales;
+  late List<SaleModel> filteredPaidSales;
 
   @override
   void initState() {
     super.initState();
-    loadSales();
+    loadPaidSales();
   }
 
-  Future<void> loadSales() async {
+  Future<void> loadPaidSales() async {
     try {
-      final List<SaleModel> fetchedSales = await saleService.getSales();
+      final List<SaleModel> fetchedPaidSales = await saleService.getPaidSales();
       setState(() {
-        sales = fetchedSales;
-        filteredSales = sales;
+        paidSales = fetchedPaidSales;
+        filteredPaidSales = paidSales;
       });
     } catch (error) {
-      print('Error loading sales: $error');
+      print('Error loading paid sales: $error');
     }
   }
 
@@ -124,7 +124,7 @@ class _SalesPageState extends State<SalesPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: EdgeInsets.only(bottom: 8.0),
+              margin: EdgeInsets.only(top: 8.0),
               child: Row(
                 children: [
                   Expanded(
@@ -136,17 +136,17 @@ class _SalesPageState extends State<SalesPage> {
                           icon: Icon(Icons.clear),
                           onPressed: () {
                             searchController.clear();
-                            // Recargar la lista completa de ventas cuando se borra el texto de búsqueda
+                            // Recargar la lista completa de ventas pagadas cuando se borra el texto de búsqueda
                             setState(() {
-                              filteredSales = sales;
+                              filteredPaidSales = paidSales;
                             });
                           },
                         ),
                       ),
                       onChanged: (value) {
                         setState(() {
-                          // Filtrar la lista de ventas según el ID ingresado
-                          filteredSales = sales
+                          // Filtrar la lista de ventas pagadas según el ID ingresado
+                          filteredPaidSales = paidSales
                               .where(
                                   (sale) => sale.id.toString().contains(value))
                               .toList();
@@ -164,7 +164,7 @@ class _SalesPageState extends State<SalesPage> {
                   child: Wrap(
                     spacing: 16.0,
                     runSpacing: 16.0,
-                    children: filteredSales.map((sale) {
+                    children: filteredPaidSales.map((sale) {
                       return SizedBox(
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: Card(
@@ -188,7 +188,7 @@ class _SalesPageState extends State<SalesPage> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => SaleDetailsPage(
+                                        builder: (context) => SaleInfoPage(
                                           sale: sale,
                                           saleDetails: saleDetails,
                                         ),
@@ -199,7 +199,7 @@ class _SalesPageState extends State<SalesPage> {
                                     primary: Color(0xFFB26926),
                                   ),
                                   child: Text(
-                                    'Pagar',
+                                    'Detalles',
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 ),

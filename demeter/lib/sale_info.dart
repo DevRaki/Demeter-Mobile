@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:demeter/models/sale_model.dart';
 import 'package:demeter/services/sale_details_service.dart';
 
-class SaleDetailsPage extends StatefulWidget {
+class SaleInfoPage extends StatefulWidget {
   final SaleModel sale;
   final List<Map<String, dynamic>> saleDetails;
 
-  SaleDetailsPage({required this.sale, required this.saleDetails});
+  SaleInfoPage({required this.sale, required this.saleDetails});
 
   @override
-  _SaleDetailsPageState createState() => _SaleDetailsPageState();
+  _SaleInfoPageState createState() => _SaleInfoPageState();
 }
 
-class _SaleDetailsPageState extends State<SaleDetailsPage> {
+class _SaleInfoPageState extends State<SaleInfoPage> {
   String selectedPaymentMethod = 'Efectivo'; // Valor predeterminado
   final SaleDetailsService saleDetailsService = SaleDetailsService();
 
@@ -100,79 +100,12 @@ class _SaleDetailsPageState extends State<SaleDetailsPage> {
             ),
             const SizedBox(height: 16),
             Text(
-              'Seleccionar método de pago',
+              'método de pago : ${widget.sale.payment}',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  margin: EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        selectedPaymentMethod = 'QR';
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: selectedPaymentMethod == 'QR'
-                          ? Color.fromARGB(255, 218, 130, 59)
-                          : Color(0xFFA67B58),
-                    ),
-                    child: Text('QR'),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        selectedPaymentMethod = 'Efectivo';
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: selectedPaymentMethod == 'Efectivo'
-                          ? Color.fromARGB(255, 218, 130, 59)
-                          : Color(0xFFA67B58),
-                    ),
-                    child: Text('Efectivo'),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        selectedPaymentMethod = 'Tarjeta';
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: selectedPaymentMethod == 'Tarjeta'
-                          ? Color.fromARGB(255, 218, 130, 59)
-                          : Color(0xFFA67B58),
-                    ),
-                    child: Text('Tarjeta'),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Divider(
-              color: Colors.black,
-              thickness: 2,
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _confirmarPago,
-              style: ElevatedButton.styleFrom(
-                primary: Color.fromARGB(255, 218, 130, 59),
-              ),
-              child: Text('Confirmar Pago'),
             ),
           ],
         ),
