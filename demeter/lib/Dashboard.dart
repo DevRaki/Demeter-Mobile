@@ -15,7 +15,7 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage> {
   final SaleService saleService = SaleService();
   late DateTime startDate = DateTime.now().subtract(Duration(days: 7));
-  late DateTime endDate = DateTime.now();
+  late DateTime endDate = DateTime.now().add(Duration(days: 1));
   late List<Map<String, dynamic>> sales = [];
 
   @override

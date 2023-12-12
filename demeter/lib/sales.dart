@@ -21,9 +21,12 @@ class _SalesPageState extends State<SalesPage> {
 
   @override
   void initState() {
-    super.initState();
-    loadSales();
-  }
+  super.initState();
+  loadSales();
+  // Inicializar filteredSales junto con sales
+  sales = [];
+  filteredSales = [];
+}
 
   Future<void> loadSales() async {
     try {

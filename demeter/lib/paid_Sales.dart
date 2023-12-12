@@ -18,10 +18,12 @@ class _PaidSalesPageState extends State<PaidSalesPage> {
   TextEditingController searchController = TextEditingController();
   late List<SaleModel> paidSales;
   late List<SaleModel> filteredPaidSales;
-
-  @override
+  
   void initState() {
     super.initState();
+    // Inicializar las listas aquí
+    paidSales = [];
+    filteredPaidSales = [];
     loadPaidSales();
   }
 

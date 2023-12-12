@@ -6,7 +6,7 @@ class SaleDetailsService {
   Future<List<Map<String, dynamic>>> getSaleDetails(int saleId) async {
     try {
       final response =
-          await _dio.get('http://localhost:4080/detailsWproduct/$saleId');
+          await _dio.get('http://26.3.226.167:4080/detailsWproduct/$saleId');
 
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data;
@@ -22,7 +22,7 @@ class SaleDetailsService {
   Future<void> updateSalePayment(int saleId, String payment) async {
     try {
       final response = await _dio.put(
-        'http://localhost:4080/paySale',
+        'http://26.3.226.167:4080/paySale',
         data: {'ID_Sale': saleId, 'Payment': payment},
       );
 
